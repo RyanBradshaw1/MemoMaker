@@ -1,8 +1,12 @@
 import React, { useReducer } from "react";
 
 export default (reducer, actions, initialState) => {
+
+    // call create context
     const Context = React.createContext();
 
+    // generic provider component to manage different types of resources
+    // manage state through useReducer hook
     const Provider = ({ children }) => {
         const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -14,6 +18,7 @@ export default (reducer, actions, initialState) => {
         }
 
         return (
+            // state and actions available to all child components
             <Context.Provider value={{ state, ...boundActions }}>
                 {children}
             </Context.Provider>

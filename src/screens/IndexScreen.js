@@ -1,10 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
 import { Context } from "../context/MemoContext";
 import { EvilIcons } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation }) => {
-    const { state, deleteMemo } = useContext(Context);
+    const { state, deleteMemo, getMemos } = useContext(Context);
+
+    useEffect(() => {
+        getMemos();
+
+        const listener = navigation.addListener('didFocus', () => {
+            getMemos();
+        });
+
+        // called if index screen ever stop showing completely
+        // cleans up listener
+        return () => {
+            listener.remove();
+        };
+    }, []);
 
     return (
         <View>
@@ -16,7 +30,7 @@ const IndexScreen = ({ navigation }) => {
                     return (
                         <TouchableOpacity onPress={() => navigation.navigate('Show', { id: item.id })}>
                             <View style={styles.row}>
-                                <Text style={styles.title}>{item.title} - {item.id}</Text>
+                                <Text style={styles.title}>{item.title}</Text>
                                 <TouchableOpacity onPress={() => deleteMemo(item.id)}>
                                     <EvilIcons style={styles.trashIcon} name="trash" />
                                 </TouchableOpacity>

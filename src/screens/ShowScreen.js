@@ -10,8 +10,8 @@ const ShowScreen = ({ navigation }) => {
 
     return (
         <View>
-            <Text>{memo.title}</Text>
-            <Text>{memo.content}</Text>
+            <Text style={styles.title}>{memo.title}</Text>
+            <Text style={styles.contents}>{memo.content}</Text>
         </View>
     );
 };
@@ -30,6 +30,15 @@ ShowScreen.navigationOptions = ({ navigation }) => {
     };
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    title: {
+        fontSize: 24,
+        textAlign: 'center',
+        marginVertical: 10,
+    },
+    contents: {
+        marginHorizontal: 10
+    }
+});
 
 export default ShowScreen;
